@@ -3,7 +3,7 @@
 
 int main(void) {
     ti_t t2 = {2019, 6, 12, 15, 26, 6};
-    ti_t t1 = {2019, 4, 10, 7, 52, 19};
+    ti_t t1 = {2019, 6, 12, 7, 52, 19};
     ti_t delta;
 
     if (ti_calc(&t1, &t2, &delta) == 0) {

@@ -52,12 +52,10 @@ int32_t ti_calc(const ti_t *t1, const ti_t *t2, ti_t *delta) {
         return 4;
     }
 
-    t.year = t2->year - t1->year;
-    t.month = t2->month - t1->month;
-    t.day = t2->day - t1->day;
-    t.hour = t2->hour - t1->hour;
-    t.min = t2->min - t1->min;
-    t.sec = t2->sec - t1->sec;
+    if (!memcmp(t1, t2, sizeof(*t1))) {      // if t1 == t2, then delta = 0
+        memset(delta, 0, sizeof(*delta));
+        return 0;
+    }
 
     if (is_leap(t2->year)) {
         montbl[1] = 29;
@@ -65,6 +63,13 @@ int32_t ti_calc(const ti_t *t1, const ti_t *t2, ti_t *delta) {
         montbl[1] = 28;
     }
     days = montbl[t2->month];
+
+    t.year = t2->year - t1->year;
+    t.month = t2->month - t1->month;
+    t.day = t2->day - t1->day;
+    t.hour = t2->hour - t1->hour;
+    t.min = t2->min - t1->min;
+    t.sec = t2->sec - t1->sec;
     if (t.sec < 0) {
         t.sec += 60;
         t.min--;
