@@ -7,7 +7,7 @@
 #include <string.h>
 #include "ti.h"
 
-static int32_t is_leap(int32_t year) {
+static int32_t is_leap(int16_t year) {
     if (year % 4 == 0 && year % 100) {
         return 1;
     }
@@ -41,10 +41,8 @@ static int32_t check_format(const ti_t *t) {
 
 int32_t ti_calc(const ti_t *t1, const ti_t *t2, ti_t *delta) {
     int8_t montbl[12] = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    uint32_t t1_hex;
-    uint32_t t2_hex;
-    ti_t t;
     int8_t days;
+    ti_t t;
 
     if (!t1 || !t2 || !delta) {
         return 1;
@@ -52,27 +50,6 @@ int32_t ti_calc(const ti_t *t1, const ti_t *t2, ti_t *delta) {
 
     if (check_format(t1) || check_format(t2)) {
         return 4;
-    }
-
-    t1_hex = t1->year << (5 * 8);
-    t1_hex |= t1->month << (4 * 8);
-    t1_hex |= t1->day << (3 * 8);
-    t1_hex |= t1->hour << (2 * 8);
-    t1_hex |= t1->min << (1 * 8);
-    t1_hex |= t1->sec << (0 * 8);
-
-    t2_hex = t2->year << (5 * 8);
-    t2_hex |= t2->month << (4 * 8);
-    t2_hex |= t2->day << (3 * 8);
-    t2_hex |= t2->hour << (2 * 8);
-    t2_hex |= t2->min << (1 * 8);
-    t2_hex |= t2->sec << (0 * 8);
-
-    if (t1_hex > t2_hex) {
-        return 2;
-    } else if (t1_hex == t2_hex) {
-        memset(delta, 0, sizeof(*delta));
-        return 3;
     }
 
     t.year = t2->year - t1->year;

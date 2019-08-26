@@ -10,7 +10,7 @@
 #include <stdint.h>
 
 typedef struct {
-    int32_t year;
+    int16_t year;
     int8_t month;
     int8_t day;
     int8_t hour;
