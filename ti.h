@@ -1,6 +1,6 @@
 /************************************************************************************
-                            
-                                ti: timer interval 
+
+                                ti: timer interval
 
 ************************************************************************************/
 
@@ -15,7 +15,7 @@ typedef struct {
     int8_t day;
     int8_t hour;
     int8_t min;
-    int8_t sec; 
+    int8_t sec;
 } ti_t;
 
 int32_t ti_calc(const ti_t *t1, const ti_t *t2, ti_t *delta);

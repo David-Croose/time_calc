@@ -1,6 +1,6 @@
 /************************************************************************************
-                            
-                                ti: timer interval 
+
+                                ti: timer interval
 
 ************************************************************************************/
 
@@ -19,7 +19,7 @@ static int32_t is_leap(int16_t year) {
 
 static int32_t check_format(const ti_t *t) {
     if (t->year < 0) {
-        return 1; 
+        return 1;
     }
     if (t->month < 0 || t->month > 12) {
         return 1;
@@ -36,16 +36,33 @@ static int32_t check_format(const ti_t *t) {
     if (t->sec < 0 || t->sec > 60) {
         return 1;
     }
-    return 0; 
+    return 0;
 }
 
+static int32_t is_minus(const ti_t *t) {
+    if (t->year < 0 || t->month < 0 || t->day < 0 || t->hour < 0 || t->min < 0 || t->sec < 0) {
+        return 1;
+    }
+    return 0;
+}
+
+/**
+ * calculate the interval with two specified time
+ * @param t1: the former time
+ * @param t2: the latter time
+ * @param delta: the delta time of @t2 - @t1
+ * @return: 0 --- process done. @t1 == @t2
+ *          1 --- process done. @t1 < @t2
+ *          -1 --- process done. @t1 > @t2
+ *          others --- process error
+ */
 int32_t ti_calc(const ti_t *t1, const ti_t *t2, ti_t *delta) {
     int8_t montbl[12] = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     int8_t days;
     ti_t t;
 
     if (!t1 || !t2 || !delta) {
-        return 1;
+        return 5;
     }
 
     if (check_format(t1) || check_format(t2)) {
@@ -92,6 +109,6 @@ int32_t ti_calc(const ti_t *t1, const ti_t *t2, ti_t *delta) {
     }
 
     *delta = t;
-    return 0; 
-} 
+    return is_minus(delta) ? -1 : 1;
+}
 
