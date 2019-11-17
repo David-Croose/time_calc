@@ -23,6 +23,7 @@ const struct {
     {{1831, 9,  24, 10, 2,  43}, {1824, 9,  19, 14, 2,  43}},
     {{1784, 2,  31, 21, 16, 39}, {1784, 2,  31, 21, 16, 39}},
     {{1685, 4,  31, 1,  8,  6},  {1682, 4,  31, 1,  8,  6}},
+    {{1585, 14, 31, 1,  8,  0},  {1582, 4,  32, 1,  18, 21}},
 };
 
 int main(void) {
@@ -36,9 +37,9 @@ int main(void) {
         b = (ti_t *)&tt[i].t2;
 
         res = ti_calc(a, b, &delta);
+        printf("t2:    %04d-%02d-%02d %02d:%02d:%02d\n", b->year, b->month, b->day, b->hour, b->min, b->sec);
+        printf("t1:    %04d-%02d-%02d %02d:%02d:%02d\n", a->year, a->month, a->day, a->hour, a->min, a->sec);
         if (res == 0 || res == 1 || res == -1) {
-            printf("t2:    %04d-%02d-%02d %02d:%02d:%02d\n", b->year, b->month, b->day, b->hour, b->min, b->sec);
-            printf("t1:    %04d-%02d-%02d %02d:%02d:%02d\n", a->year, a->month, a->day, a->hour, a->min, a->sec);
             printf("delta: %04d-%02d-%02d %02d:%02d:%02d\n", delta.year, delta.month, delta.day, delta.hour, delta.min, delta.sec);
             printf("t2 %s t1\n", (res == 0 ? "==" : (res == 1 ? ">" : "<")));
         } else {
